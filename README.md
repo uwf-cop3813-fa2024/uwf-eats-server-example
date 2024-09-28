@@ -14,16 +14,9 @@ npm link jest
 
 ## Developing
 
-Developers should run two separate commands to watch server code for changes.
-
 To watch server-side code and automatically restart express when code is changed, run:
 ```
 nodemon server.js
-```
-
-In a separate terminal, navigate to the uwf-eats-client and then run the dev command automatically build and serve React app code:
-```
-cd uwf-eats-client && npm run dev
 ```
 
 ## Tests
@@ -38,7 +31,9 @@ This will run the code using the Jest test runner.
 
 Ensure that you have prisma installed globally by running
 
-```npm install -g prisma'```
+```
+npm install -g prisma
+```
 
 To create the database files, you need to run a migration. You can enter this command:
 ```
