@@ -60,7 +60,7 @@ describe('RestaurantsController', () => {
     expect(response.status).toBe(404);
     expect(response.body).toEqual({
       status: 'fail',
-      data: { restaurant: 'Not found' }
+      message: 'Restaurant not found'
     });
     expect(restaurantsService.getRestaurant).toHaveBeenCalledWith(999);
     expect(restaurantsService.getRestaurant).toHaveBeenCalledTimes(1);

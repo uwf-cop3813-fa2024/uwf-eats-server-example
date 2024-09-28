@@ -60,7 +60,7 @@ describe('DestinationsController', () => {
         expect(response.status).toBe(404);
         expect(response.body).toEqual({
             status: 'fail',
-            data: { destination: 'Not found' }
+            message: 'Destination not found'
         });
         expect(destinationServiceMock.getDestination).toHaveBeenCalledWith(999);
     });

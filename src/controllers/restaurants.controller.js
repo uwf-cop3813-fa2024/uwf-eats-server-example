@@ -15,7 +15,7 @@ const RestaurantsController = (security, restaurantsService) => {
       if (restaurant) {
           res.json({ status: "success", data: { restaurant } });
       } else {
-          res.status(404).json({ status: "fail", data: { restaurant: "Not found" } });
+          res.status(404).json({ status: "fail", message: "Restaurant not found" } );
       }
   });
 

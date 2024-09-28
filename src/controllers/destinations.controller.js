@@ -15,7 +15,7 @@ const DestinationsController = (security, destinationService) => {
         if (destination) {
             res.json({ status: "success", data: { destination } });
         } else {
-            res.status(404).json({ status: "fail", data: { destination: "Not found" } });
+            res.status(404).json({ status: "fail", message: "Destination not found" } );
         }
     });
 

@@ -14,9 +14,7 @@ const UsersController = (userService, tokenService) => {
         } else {
             res.status(401).json({
                 status: "fail",
-                data: {
-                    credentials: "Invalid credentials"
-                }
+                message: "Invalid credentials"
             });
         }
     });
@@ -27,9 +25,7 @@ const UsersController = (userService, tokenService) => {
         if(!email || !password || !firstName || !lastName || !role) {
             res.status(400).json({
                 status: "fail",
-                data: {
-                    message: "Missing required fields"
-                }
+                message: "Missing required fields"
             });
             return;
         }

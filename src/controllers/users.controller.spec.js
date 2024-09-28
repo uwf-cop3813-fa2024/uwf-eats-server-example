@@ -51,9 +51,7 @@ describe('UsersController', () => {
             expect(response.status).toBe(401);
             expect(response.body).toEqual({
                 status: 'fail',
-                data: {
-                    credentials: 'Invalid credentials'
-                }
+                message: 'Invalid credentials'
             });
         });
     });
@@ -81,9 +79,7 @@ describe('UsersController', () => {
             expect(response.status).toBe(400);
             expect(response.body).toEqual({
                 status: 'fail',
-                data: {
-                    message: 'Missing required fields'
-                }
+                message: 'Missing required fields'
             });
         });
     });
