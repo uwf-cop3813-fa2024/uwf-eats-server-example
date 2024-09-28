@@ -27,6 +27,10 @@ npm run test
 ```
 This will run the code using the Jest test runner.
 
+## Postman Collection
+
+There is a json file located in the `postman` directory containing a collection of requests you can use to test the API. You can start with this collection and add to it over time. It will be very useful for testing in the absence of a UI.
+
 ## Database
 
 Ensure that you have prisma installed globally by running
