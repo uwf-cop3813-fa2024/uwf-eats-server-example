@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "8bff4321-731d-4c5c-8107-8e2e08219697",
+		"name": "SE1 - UWF Eats",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "219973",
+		"_collection_link": "https://cen3031-apps.postman.co/workspace/CEN3031-Apps-Workspace~30c15c5a-b141-45e8-9c3b-f0605fcfca8a/collection/219973-8bff4321-731d-4c5c-8107-8e2e08219697?action=share&source=collection_link&creator=219973"
+	},
+	"item": [
+		{
+			"name": "localhost:3001/api/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"efridge@uwf.edu\",\n    \"firstName\": \"E.L.\",\n    \"lastName\": \"Fridge\",\n    \"password\": \"notAG00dPassword\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/api/register",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3001/api/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"efridge@uwf.edu\",\n    \"password\": \"notAG00dPassword\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3001/api/destinations",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiZWZyaWRnZUB1d2YuZWR1IiwiZmlyc3ROYW1lIjoiRS5MLiIsImxhc3ROYW1lIjoiRnJpZGdlIn0sImlhdCI6MTcyNzE5NDUzMSwiZXhwIjoxNzI3MjgwOTMxfQ.hPifx35Y0R5aWbZgz0N5ljJgS6yRQp35KzknNbQObr8",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "localhost:3001/api/destinations",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"destinations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3001/api/restaurants",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiZWZyaWRnZUB1d2YuZWR1IiwiZmlyc3ROYW1lIjoiRS5MLiIsImxhc3ROYW1lIjoiRnJpZGdlIn0sImlhdCI6MTcyNzUzOTc2MiwiZXhwIjoxNzI3NjI2MTYyfQ.939NhpSW6oMLM0Ye_xnrfyb0qk-ogOrWbUqMO1xec18",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "localhost:3001/api/restaurants",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"restaurants"
+					],
+					"query": [
+						{
+							"key": "Authorization",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

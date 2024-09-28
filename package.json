@@ -1,0 +1,37 @@
+{
+  "name": "uwf-eats",
+  "version": "1.0.0",
+  "description": "An app that lets UWF students order food on campus.",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest src",
+    "start": "node server.js",
+    "lint": "eslint ."
+  },
+  "jest": {
+    "testMatch": [
+      "<rootDir>/src/**/*.spec.js"
+    ]
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "author": "E.L. Fridge, Chris Roemer, and CEN3031",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.19.1",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.5",
+    "prisma": "^5.19.1",
+    "supertest": "^7.0.0",
+    "eslint": "^9.11.1"
+  }
+}

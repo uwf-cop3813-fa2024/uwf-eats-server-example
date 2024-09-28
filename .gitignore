@@ -1,0 +1,11 @@
+node_modules/
+dist/
+client/
+
+# avoid db files
+*.db
+*.db-journal
+
+# avoid env files
+*.env
+.env

@@ -1,0 +1,14 @@
+{
+  "tests": [
+    {
+      "name": "Jest",
+      "setup": "npm install jest;npm install",
+      "run": "npm test",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 3,
+      "points": null
+    }
+  ]
+}
