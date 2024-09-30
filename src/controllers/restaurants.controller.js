@@ -11,7 +11,7 @@ const RestaurantsController = (security, restaurantsService) => {
   });
 
   router.get("/restaurants/:id", async (req, res) => {
-      const restaurant = await restaurantsService.getRestaurant(parseInt(req.params.id));
+      const restaurant = await restaurantsService.getRestaurantById(parseInt(req.params.id));
       if (restaurant) {
           res.json({ status: "success", data: { restaurant } });
       } else {

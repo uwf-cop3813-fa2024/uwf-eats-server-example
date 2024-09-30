@@ -14,7 +14,7 @@ describe('RestaurantsController', () => {
 
     restaurantsService = {
       getRestaurants: jest.fn(),
-      getRestaurant: jest.fn()
+      getRestaurantById: jest.fn()
     };
 
     app = express();
@@ -39,7 +39,7 @@ describe('RestaurantsController', () => {
 
   test('GET /restaurants/:id should return a single restaurant if found', async () => {
     const mockRestaurant = { id: 1, name: 'Restaurant 1' };
-    restaurantsService.getRestaurant.mockResolvedValue(mockRestaurant);
+    restaurantsService.getRestaurantById.mockResolvedValue(mockRestaurant);
 
     const response = await request(app).get('/restaurants/1');
 
@@ -48,12 +48,12 @@ describe('RestaurantsController', () => {
       status: 'success',
       data: { restaurant: mockRestaurant }
     });
-    expect(restaurantsService.getRestaurant).toHaveBeenCalledWith(1);
-    expect(restaurantsService.getRestaurant).toHaveBeenCalledTimes(1);
+    expect(restaurantsService.getRestaurantById).toHaveBeenCalledWith(1);
+    expect(restaurantsService.getRestaurantById).toHaveBeenCalledTimes(1);
   });
 
   test('GET /restaurants/:id should return 404 if restaurant not found', async () => {
-    restaurantsService.getRestaurant.mockResolvedValue(null);
+    restaurantsService.getRestaurantById.mockResolvedValue(null);
 
     const response = await request(app).get('/restaurants/999');
 
@@ -62,7 +62,7 @@ describe('RestaurantsController', () => {
       status: 'fail',
       message: 'Restaurant not found'
     });
-    expect(restaurantsService.getRestaurant).toHaveBeenCalledWith(999);
-    expect(restaurantsService.getRestaurant).toHaveBeenCalledTimes(1);
+    expect(restaurantsService.getRestaurantById).toHaveBeenCalledWith(999);
+    expect(restaurantsService.getRestaurantById).toHaveBeenCalledTimes(1);
   });
 });

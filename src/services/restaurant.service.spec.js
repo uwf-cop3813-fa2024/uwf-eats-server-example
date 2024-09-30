@@ -35,12 +35,12 @@ describe('RestaurantService', () => {
     });
   });
 
-  describe('getRestaurant', () => {
+  describe('getRestaurantById', () => {
     it('should return a single restaurant by id', async () => {
       const mockRestaurant = { id: 1, name: 'Restaurant 1', foods: [] };
       prisma.restaurant.findUnique.mockResolvedValue(mockRestaurant);
 
-      const result = await restaurantService.getRestaurant(1);
+      const result = await restaurantService.getRestaurantById(1);
       expect(result).toEqual(mockRestaurant);
       expect(prisma.restaurant.findUnique).toHaveBeenCalledWith({
         where: { id: 1 },
@@ -52,7 +52,7 @@ describe('RestaurantService', () => {
     it('should return null if restaurant not found', async () => {
       prisma.restaurant.findUnique.mockResolvedValue(null);
 
-      const result = await restaurantService.getRestaurant(999);
+      const result = await restaurantService.getRestaurantById(999);
       expect(result).toBeNull();
       expect(prisma.restaurant.findUnique).toHaveBeenCalledWith({
         where: { id: 999 },

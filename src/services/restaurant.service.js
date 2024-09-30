@@ -7,7 +7,7 @@ class RestaurantService {
       return this.prisma.restaurant.findMany();
   }
 
-  async getRestaurant(id) {
+  async getRestaurantById(id) {
       return this.prisma.restaurant.findUnique({
           where: { id: parseInt(id) },
           include: { foods: true },
