@@ -29,12 +29,12 @@ describe('DestinationService', () => {
         });
     });
 
-    describe('getDestination', () => {
+    describe('getDestinationById', () => {
         it('should return a single destination by id', async () => {
             const mockDestination = { id: 1, name: 'Destination 1' };
             mockPrisma.destination.findUnique.mockResolvedValue(mockDestination);
 
-            const destination = await destinationService.getDestination(1);
+            const destination = await destinationService.getDestinationById(1);
 
             expect(destination).toEqual(mockDestination);
             expect(mockPrisma.destination.findUnique).toHaveBeenCalledWith({
@@ -46,7 +46,7 @@ describe('DestinationService', () => {
         it('should return null if destination is not found', async () => {
             mockPrisma.destination.findUnique.mockResolvedValue(null);
 
-            const destination = await destinationService.getDestination(999);
+            const destination = await destinationService.getDestinationById(999);
 
             expect(destination).toBeNull();
             expect(mockPrisma.destination.findUnique).toHaveBeenCalledWith({

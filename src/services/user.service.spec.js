@@ -2,7 +2,7 @@ const UserService = require('./user.service');
 
 describe('User Service', () => {
     let prismaMock;
-    let bcryptMock
+    let bcryptMock;
     let userService;
     let user;
 

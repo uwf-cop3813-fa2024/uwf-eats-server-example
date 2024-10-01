@@ -11,7 +11,7 @@ const DestinationsController = (security, destinationService) => {
     });
 
     router.get("/destinations/:id", async (req, res) => {
-        const destination = await destinationService.getDestination(parseInt(req.params.id));
+        const destination = await destinationService.getDestinationById(parseInt(req.params.id));
         if (destination) {
             res.json({ status: "success", data: { destination } });
         } else {

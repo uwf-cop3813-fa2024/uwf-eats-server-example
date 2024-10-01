@@ -16,7 +16,7 @@ describe('DestinationsController', () => {
 
         destinationServiceMock = {
             getDestinations: jest.fn(),
-            getDestination: jest.fn()
+            getDestinationById: jest.fn()
         };
 
         app = express();
@@ -40,7 +40,7 @@ describe('DestinationsController', () => {
 
     it('should return a single destination', async () => {
         const mockDestination = { id: 1, name: 'Destination 1' };
-        destinationServiceMock.getDestination.mockResolvedValue(mockDestination);
+        destinationServiceMock.getDestinationById.mockResolvedValue(mockDestination);
 
         const response = await request(app).get('/destinations/1');
 
@@ -49,11 +49,11 @@ describe('DestinationsController', () => {
             status: 'success',
             data: { destination: mockDestination }
         });
-        expect(destinationServiceMock.getDestination).toHaveBeenCalledWith(1);
+        expect(destinationServiceMock.getDestinationById).toHaveBeenCalledWith(1);
     });
 
     it('should return 404 if destination not found', async () => {
-        destinationServiceMock.getDestination.mockResolvedValue(null);
+        destinationServiceMock.getDestinationById.mockResolvedValue(null);
 
         const response = await request(app).get('/destinations/999');
 
@@ -62,7 +62,7 @@ describe('DestinationsController', () => {
             status: 'fail',
             message: 'Destination not found'
         });
-        expect(destinationServiceMock.getDestination).toHaveBeenCalledWith(999);
+        expect(destinationServiceMock.getDestinationById).toHaveBeenCalledWith(999);
     });
 
     it('should enforce authentication', async () => {

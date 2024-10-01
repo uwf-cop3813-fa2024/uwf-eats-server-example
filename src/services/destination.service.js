@@ -7,7 +7,7 @@ class DestinationService {
         return this.prisma.destination.findMany();
     }
 
-    async getDestination(id) {
+    async getDestinationById(id) {
         return this.prisma.destination.findUnique({
             where: { id: parseInt(id) }
         });
