@@ -27,6 +27,15 @@ npm run test
 ```
 This will run the code using the Jest test runner.
 
+## Environment file
+
+You will need to add an environment file to the root of your app. This will contain secret values that we don't want to put in git. You should use the following format, taking care not to have any spaces between the keys, equal sign, or values. You can change the JWT_SECRET value to your own, randomly generated value of 32 characters.
+
+```
+JWT_SECRET="asdf"
+JWT_EXPIRES_IN="1d"
+```
+
 ## Postman Collection
 
 There is a json file located in the `postman` directory containing a collection of requests you can use to test the API. You can start with this collection and add to it over time. It will be very useful for testing in the absence of a UI.
@@ -46,7 +55,7 @@ npx prisma migrate dev --name init
 
 To seed the initial data using the provided seed file, run this command:
 ```
-npx prisma seed
+node prisma/seed.js
 ```
 
 To reset the database:
