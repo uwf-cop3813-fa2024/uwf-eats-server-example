@@ -11,6 +11,10 @@ const OrdersController = (security, orderService) => {
   });
 
   router.post("/orders", async (req, res) => {
+      // Only customers can place orders
+      if (req.user.role !== "customer") {
+          return res.status(403).json({ status: "fail", message: "You are not authorized to place an order" });
+      }
       // Validate the request body
       if (!req.body.restaurantId || !req.body.destinationId || !req.body.orderItems) {
           return res.status(400).json({ status: "fail", message: "Missing required fields: restaurantId, destinationId, and orderItems" });

@@ -22,13 +22,19 @@ const DriversController = (security, orderService) => {
         return res.status(403).json({ status: "fail", message: "You are not authorized to accept this order" });
     }
 
+    // Get the order to inspect its status
+    const order = await orderService.getOrderById(parseInt(req.params.orderId));
+    if(order.status !== "pending") {
+        return res.status(400).json({ status: "fail", message: "This order is not available to be claimed" });
+    }
+
     const orders = await orderService.claimOrder(req.params.orderId, req.params.driverId);
     res.json({ status: "success", data: { orders } });
   });
 
   router.get("/drivers/:driverId/orders/history", async (req, res) => {
-      // Ensure that the driver id matches the user's id
-      if (parseInt(req.params.driverId) !== req.user.id) {
+      // Ensure that the driver id matches the user's id and that they are a driver
+      if (req.user.role !== 'driver' || parseInt(req.params.driverId) !== req.user.id) {
           return res.status(403).json({ status: "fail", message: "You are not authorized to view this driver's orders" });
       }
 
