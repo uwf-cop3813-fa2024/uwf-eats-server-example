@@ -9,7 +9,17 @@ const UsersController = (userService, tokenService) => {
             const token = await tokenService.generateToken(user);
             res.json({
                 status: "success",
-                data: { token }
+                data: { 
+                    token: token, 
+                    user: { 
+                        id: user.id,
+                        email: user.email, 
+                        firstName: user.firstName, 
+                        lastName: user.lastName, 
+                        role: user.role,
+                        accountBalance: user.accountBalance
+                    } 
+                }
             });
         } else {
             res.status(401).json({

@@ -40,9 +40,12 @@ class UserService {
     // If the user exists and the password is correct, return the user
     if (user && await this.bcrypt.compare(password, user.password)) {
       return {
+        id: user.id,
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
+        role: user.role,
+        accountBalance: user.accountBalance,
       };
     } else {
       return null;

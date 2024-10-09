@@ -8,38 +8,68 @@ generator client {
 }
 
 model User {
-  id        Int         @id @default(autoincrement())
-  email     String      @unique
-  firstName String
-  lastName  String
-  password  String
-  role      String     @default("customer")
-  accountBalance Float @default(0)
+  id             Int     @id @default(autoincrement())
+  email          String  @unique
+  firstName      String
+  lastName       String
+  password       String
+  role           String  @default("customer")
+  customerOrders Order[] @relation("customerOrders")
+  driverOrders   Order[] @relation("driverOrders")
+  accountBalance Float   @default(0)
 }
 
 model Destination {
-  id        Int     @id @default(autoincrement())
-  name      String
-  address   String?
-  phone     String?
-  notes     String?
+  id      Int     @id @default(autoincrement())
+  name    String
+  address String?
+  phone   String?
+  notes   String?
+  orders  Order[]
 }
 
 model Restaurant {
-  id        Int     @id @default(autoincrement())
-  name      String
-  address   String?
-  phone     String?
-  notes     String?
-  foods     Food[]
+  id      Int     @id @default(autoincrement())
+  name    String
+  address String?
+  phone   String?
+  notes   String?
+  foods   Food[]
+  orders  Order[]
 }
 
 model Food {
-  id          Int     @id @default(autoincrement())
-  name        String
-  description String?
-  price       Float
-  category    String
-  restaurant  Restaurant @relation(fields: [restaurantId], references: [id])
+  id           Int         @id @default(autoincrement())
+  name         String
+  description  String?
+  price        Float
+  category     String
+  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
   restaurantId Int
+  orderItems   OrderItem[]
+}
+
+model Order {
+  id            Int         @id @default(autoincrement())
+  customer      User        @relation(name: "customerOrders", fields: [customerId], references: [id])
+  customerId    Int
+  driver        User?       @relation(name: "driverOrders", fields: [driverId], references: [id])
+  driverId      Int?
+  destination   Destination @relation(fields: [destinationId], references: [id])
+  destinationId Int
+  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
+  restaurantId Int
+  orderItems OrderItem[]
+  status     String      @default("pending")
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model OrderItem {
+  id       Int   @id @default(autoincrement())
+  food     Food  @relation(fields: [foodId], references: [id])
+  foodId   Int
+  order    Order @relation(fields: [orderId], references: [id])
+  orderId  Int
+  quantity Int
 }
