@@ -1,3 +1,4 @@
+// Created with assistance by Github Copilot
 const request = require('supertest');
 const express = require('express');
 const DriversController = require('./drivers.controller');
@@ -70,6 +71,59 @@ describe('DriversController', () => {
     expect(response.body).toEqual({
       status: 'fail',
       message: 'You are not authorized to view available orders'
+    });
+  });
+
+  it('should allow a driver to accept an order if authorized', async () => {
+    const mockOrder = { id: 1, driverId: 1 };
+    orderService.claimOrder = jest.fn().mockResolvedValue(mockOrder);
+
+    // Mock user role as driver
+    security.authenticateJWT = jest.fn((req, res, next) => {
+      req.user = { id: 1, role: 'driver' };
+      next();
+    });
+
+    // Create an individual instance of the app for this test
+    app = express();
+    const { router } = DriversController(security, orderService);
+    app.use(express.json());
+    app.use(router);
+
+    const response = await request(app)
+      .get('/drivers/1/orders/1/accept')
+      .set('Authorization', 'Bearer token');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      status: 'success',
+      data: { orders: mockOrder }
+    });
+    expect(orderService.claimOrder).toHaveBeenCalledWith('1', '1');
+    expect(orderService.claimOrder).toHaveBeenCalledTimes(1);
+  });
+
+  it('should return 403 if a non-driver tries to accept an order', async () => {
+    // Mock user role as something other than driver
+    security.authenticateJWT = jest.fn((req, res, next) => {
+      req.user = { id: 1, role: 'customer' };
+      next();
+    });
+
+    // Create an individual instance of the app for this test
+    app = express();
+    const { router } = DriversController(security, orderService);
+    app.use(express.json());
+    app.use(router);
+
+    const response = await request(app)
+      .get('/drivers/1/orders/1/accept')
+      .set('Authorization', 'Bearer token');
+
+    expect(response.status).toBe(403);
+    expect(response.body).toEqual({
+      status: 'fail',
+      message: 'You are not authorized to accept this order'
     });
   });
 

@@ -50,6 +50,14 @@ class OrderService {
       });
   }
 
+  async claimOrder(orderId, driverId) {
+      return this.prisma.order.update({
+          where: { id: parseInt(orderId) },
+          data: { status: "accepted", driverId: parseInt(driverId) },
+          include: { orderItems: { include: { food: true } } },
+      });
+  }
+
   async updateOrderStatus(orderId, status) {
       return this.prisma.order.update({
           where: { id: parseInt(orderId) },

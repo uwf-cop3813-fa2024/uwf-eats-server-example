@@ -37,7 +37,7 @@ const OrdersController = (security, orderService) => {
       const order = await orderService.getOrderById(parseInt(req.params.id));
       if (order) {
           // Check to see if the user is authorized to update this order
-          if (order.customerId !== req.user.id) {
+          if (order.driverId !== req.user.id) {
               return res.status(403).json({ status: "fail", message: "You are not authorized to update this order" });
           }
 
