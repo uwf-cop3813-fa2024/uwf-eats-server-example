@@ -10,7 +10,7 @@ describe('OrdersController', () => {
   beforeEach(() => {
     security = {
       authenticateJWT: jest.fn((req, res, next) => {
-      req.user = { id: 1 }; // Create a user object in req.user
+      req.user = { id: 1, role: "customer" }; // Create a user object in req.user
       next();
       })
     };
