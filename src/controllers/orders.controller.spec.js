@@ -56,15 +56,15 @@ describe('OrdersController', () => {
 
     const response = await request(app)
       .post('/orders')
-      .send({ restaurantId: 1, orderItems: [{ foodId: 1, quantity: 2 }] });
+      .send({ restaurantId: 1, destinationId: 1, orderItems: [{ foodId: 1, quantity: 2 }] });
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
       status: 'success',
       data: { order: mockOrder }
     });
-    // Should be called with user id 1, restaurant id 1, and order items
-    expect(orderService.placeOrder).toHaveBeenCalledWith(1, 1, [{ foodId: 1, quantity: 2 }]);
+    // Should be called with user id 1, restaurant id 1, destination id 1, and order items
+    expect(orderService.placeOrder).toHaveBeenCalledWith(1, 1, 1, [{ foodId: 1, quantity: 2 }]);
     expect(orderService.placeOrder).toHaveBeenCalledTimes(1);
   });
 
@@ -81,15 +81,23 @@ describe('OrdersController', () => {
     expect(response.status).toBe(400);
     expect(response.body).toEqual({
       status: 'fail',
-      message: 'Missing required fields: restaurantId and orderItems'
+      message: 'Missing required fields: restaurantId, destinationId, and orderItems'
     });
   });
 
   test('PUT /orders/:id should update an order status', async () => {
-    const mockOrder = { id: 1, customerId: 1, status: 'pending' };
+    // Create a mock order that has a driver id of 3
+    const mockOrder = { id: 1, customerId: 1, driverId: 3, status: 'pending' };
     orderService.getOrderById.mockResolvedValue(mockOrder);
     const updatedOrder = { ...mockOrder, status: 'completed' };
     orderService.updateOrderStatus.mockResolvedValue(updatedOrder);
+    
+    // Create a mock user with an id of 3 and role of driver
+    const updatedUser = { id: 3, role: 'driver' };
+    security.authenticateJWT = jest.fn((req, res, next) => {
+      req.user = updatedUser;
+      next();
+    });
 
     app = express();
     const { router } = OrdersController(security, orderService);
@@ -100,6 +108,7 @@ describe('OrdersController', () => {
       .put('/orders/1')
       .send({ status: 'completed' });
 
+    // It should allow this to happen 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
       status: 'success',

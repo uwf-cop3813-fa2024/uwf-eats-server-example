@@ -24,7 +24,7 @@ const DriversController = (security, orderService) => {
 
     const orders = await orderService.claimOrder(req.params.orderId, req.params.driverId);
     res.json({ status: "success", data: { orders } });
-});
+  });
 
   router.get("/drivers/:driverId/orders/history", async (req, res) => {
       // Ensure that the driver id matches the user's id

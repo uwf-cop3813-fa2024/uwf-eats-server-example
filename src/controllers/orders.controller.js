@@ -12,8 +12,8 @@ const OrdersController = (security, orderService) => {
 
   router.post("/orders", async (req, res) => {
       // Validate the request body
-      if (!req.body.restaurantId || !req.body.orderItems) {
-          return res.status(400).json({ status: "fail", message: "Missing required fields: restaurantId and orderItems" });
+      if (!req.body.restaurantId || !req.body.destinationId || !req.body.orderItems) {
+          return res.status(400).json({ status: "fail", message: "Missing required fields: restaurantId, destinationId, and orderItems" });
       }
 
       // Ensure that the orderItems is an array
