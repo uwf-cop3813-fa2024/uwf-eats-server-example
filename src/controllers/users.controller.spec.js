@@ -25,7 +25,7 @@ describe('UsersController', () => {
     });
 
     describe('POST /users/login', () => {
-        it('should return a token for valid credentials', async () => {
+        it('should return a token and user for valid credentials', async () => {
             const user = { id: 1, email: 'test@example.com' };
             userServiceMock.authentiticateUser.mockResolvedValue(user);
             tokenServiceMock.generateToken.mockResolvedValue('fake-token');
@@ -37,7 +37,7 @@ describe('UsersController', () => {
             expect(response.status).toBe(200);
             expect(response.body).toEqual({
                 status: 'success',
-                data: { token: 'fake-token' }
+                data: { token: 'fake-token', user: { id: 1, email: 'test@example.com' } }
             });
         });
 

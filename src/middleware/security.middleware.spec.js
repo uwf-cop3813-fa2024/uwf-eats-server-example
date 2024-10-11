@@ -38,14 +38,17 @@ describe('SecurityMiddleware', () => {
     });
 
     it('should call next and attach user to request if token is valid', async () => {
-        const mockUser = { id: 1, name: 'Test User' };
-        tokenServiceMock.verifyToken.mockResolvedValue(mockUser);
+        const tokenResponse = { user: {id: 1, name: 'Test User' }};
+        tokenServiceMock.verifyToken.mockResolvedValue(tokenResponse);
 
         const response = await request(app)
             .get('/test')
             .set('Authorization', 'Bearer validtoken');
 
         expect(response.status).toBe(200);
-        expect(response.body).toEqual({ message: 'Success', user: mockUser });
+        expect(response.body).toEqual({
+            message: 'Success',
+            user: tokenResponse.user
+        });
     });
 });

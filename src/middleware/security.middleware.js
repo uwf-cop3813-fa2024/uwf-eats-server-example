@@ -6,10 +6,10 @@ const SecurityMiddleware = (tokenService) => {
             // Separate the JWT from the "Bearer" prefix
             const token = authHeader.split(' ')[1];
 
-            const user = await tokenService.verifyToken(token);
-            if (user) {
+            const verifiedToken = await tokenService.verifyToken(token);
+            if (verifiedToken) {
                 // We save the user object in the request so it's accessible down the line
-                req.user = user;
+                req.user = verifiedToken.user;
                 next();
             } else {
                 res.sendStatus(403);
