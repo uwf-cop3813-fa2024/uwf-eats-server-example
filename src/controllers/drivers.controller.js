@@ -24,7 +24,7 @@ const DriversController = (security, orderService) => {
 
     // Get the order to inspect its status
     const order = await orderService.getOrderById(parseInt(req.params.orderId));
-    if(order.status !== "pending") {
+    if(order && order.status !== "pending") {
         return res.status(400).json({ status: "fail", message: "This order is not available to be claimed" });
     }
 
