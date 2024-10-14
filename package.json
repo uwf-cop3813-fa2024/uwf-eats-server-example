@@ -19,7 +19,7 @@
   "author": "E.L. Fridge, Chris Roemer, and CEN3031",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^5.19.1",
+    "@prisma/client": "^5.20.0",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -28,10 +28,10 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^9.11.1",
     "jest": "^29.7.0",
     "nodemon": "^3.1.5",
-    "prisma": "^5.19.1",
-    "supertest": "^7.0.0",
-    "eslint": "^9.11.1"
+    "prisma": "^5.20.0",
+    "supertest": "^7.0.0"
   }
 }

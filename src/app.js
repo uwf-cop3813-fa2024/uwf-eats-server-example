@@ -15,6 +15,9 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 // Create instances of services and middleware
+const OrderService = require("./services/order.service");
+const orderService = new OrderService(prisma);
+
 const DestinationService = require("./services/destination.service");
 const destinationService = new DestinationService(prisma);
 
@@ -40,10 +43,18 @@ const destinationsController = DestinationsController(securityMiddleware, destin
 const RestaurantsController = require('./controllers/restaurants.controller');
 const restaurantsController = RestaurantsController(securityMiddleware, restaurantService);
 
+const OrdersController = require('./controllers/orders.controller');
+const ordersController = OrdersController(securityMiddleware, orderService);
+
+const DriversController = require('./controllers/drivers.controller');
+const driversController = DriversController(securityMiddleware, orderService);
+
 // Routes
-app.use('/api', usersController.router);
+app.use('/api', usersController.router);        // This MUST come before the other routes
 app.use('/api', destinationsController.router);
 app.use('/api', restaurantsController.router);
+app.use('/api', ordersController.router);
+app.use('/api', driversController.router);
 
 // Error handler
 app.use((err, req, res, next) => {
