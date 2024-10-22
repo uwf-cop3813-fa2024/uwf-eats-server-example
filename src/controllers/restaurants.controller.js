@@ -1,16 +1,13 @@
-const RestaurantsController = (security, restaurantsService) => {
+const RestaurantsController = (sec, restaurantsService) => {
 
   const router = require("express").Router();
-
-  // Enforce authentication for all routes in this controller
-  router.use(security.authenticateJWT);
-
-  router.get("/restaurants", async (req, res) => {
+  
+  router.get("/restaurants", sec.authenticateJWT, async (req, res) => {
       const restaurants = await restaurantsService.getRestaurants();
       res.json({ status: "success", data: { restaurants } });
   });
 
-  router.get("/restaurants/:id", async (req, res) => {
+  router.get("/restaurants/:id", sec.authenticateJWT, async (req, res) => {
       const restaurant = await restaurantsService.getRestaurantById(parseInt(req.params.id));
       if (restaurant) {
           res.json({ status: "success", data: { restaurant } });

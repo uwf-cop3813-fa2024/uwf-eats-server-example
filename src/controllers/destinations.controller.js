@@ -1,16 +1,13 @@
-const DestinationsController = (security, destinationService) => {
+const DestinationsController = (sec, destinationService) => {
 
     const router = require("express").Router();
 
-    // Enforce authentication for all routes in this controller
-    router.use(security.authenticateJWT);
-
-    router.get("/destinations", async (req, res) => {
+    router.get("/destinations", sec.authenticateJWT, async (req, res) => {
         const destinations = await destinationService.getDestinations();
         res.json({ status: "success", data: { destinations } });
     });
 
-    router.get("/destinations/:id", async (req, res) => {
+    router.get("/destinations/:id", sec.authenticateJWT, async (req, res) => {
         const destination = await destinationService.getDestinationById(parseInt(req.params.id));
         if (destination) {
             res.json({ status: "success", data: { destination } });
