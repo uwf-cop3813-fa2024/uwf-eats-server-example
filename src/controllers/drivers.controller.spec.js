@@ -13,12 +13,16 @@ describe('DriversController', () => {
       authenticateJWT: jest.fn((req, res, next) => {
       req.user = { id: 1 }; // Create a user object in req.user
       next();
-      })
+      }),
+
+      isCustomer: jest.fn((req, res, next) => { next(); }),
+      isDriver: jest.fn((req, res, next) => { next(); }),
     };
 
     orderService = {
       getOrdersByStatus: jest.fn(),
-      getOrdersByDriverId: jest.fn()
+      getOrdersByDriverId: jest.fn(),
+      getOrderById: jest.fn(),
     };
   });
 
@@ -57,6 +61,11 @@ describe('DriversController', () => {
       next();
     });
 
+    // Mock isDriver to return a 403
+    security.isDriver = jest.fn((req, res, next) => {
+      res.status(403).json({ status: 'fail', message: 'You are not authorized to perform this action' });
+    });
+    
     // Create an individual instance of the app for this test
     app = express();
     const { router } = DriversController(security, orderService);
@@ -70,19 +79,23 @@ describe('DriversController', () => {
     expect(response.status).toBe(403);
     expect(response.body).toEqual({
       status: 'fail',
-      message: 'You are not authorized to view available orders'
+      message: 'You are not authorized to perform this action'
     });
   });
 
   it('should allow a driver to accept an order if authorized', async () => {
     const mockOrder = { id: 1, driverId: 1 };
     orderService.claimOrder = jest.fn().mockResolvedValue(mockOrder);
+    orderService.getOrderById = jest.fn().mockResolvedValue({ id: 1, status: 'pending' });
 
     // Mock user role as driver
     security.authenticateJWT = jest.fn((req, res, next) => {
       req.user = { id: 1, role: 'driver' };
       next();
     });
+
+    // Mock isDriver to allow them through
+    security.isDriver = jest.fn((req, res, next) => {next()});
 
     // Create an individual instance of the app for this test
     app = express();
@@ -110,6 +123,11 @@ describe('DriversController', () => {
       next();
     });
 
+    // Mock isDriver to return a 403
+    security.isDriver = jest.fn((req, res, next) => {
+      res.status(403).json({ status: 'fail', message: 'You are not authorized to perform this action' });
+    });
+
     // Create an individual instance of the app for this test
     app = express();
     const { router } = DriversController(security, orderService);
@@ -123,7 +141,7 @@ describe('DriversController', () => {
     expect(response.status).toBe(403);
     expect(response.body).toEqual({
       status: 'fail',
-      message: 'You are not authorized to accept this order'
+      message: 'You are not authorized to perform this action'
     });
   });
 

@@ -19,7 +19,35 @@ const SecurityMiddleware = (tokenService) => {
         }
     };
 
-    return { authenticateJWT };
+    const isCustomer = (req, res, next) => {
+        if (req.user.role === 'customer') {
+            next();
+        } else {
+            res.status(403)
+            .json({ status: "fail", message: "You are not authorized to perform this action" });
+        }
+    };
+
+    const isDriver = (req, res, next) => {
+        if (req.user.role === 'driver') {
+            next();
+        } else {
+            res.status(403)
+            .json({ status: "fail", message: "You are not authorized to perform this action" });
+        }
+    }
+
+    const isAdmin = (req, res, next) => {
+        if (req.user.role === 'admin') {
+            next();
+        } else {
+            res.status(403)
+            .json({ status: "fail", message: "You are not authorized to perform this action" });
+        }
+    };
+
+    // Returns an object with the middleware functions
+    return { authenticateJWT, isCustomer, isDriver, isAdmin };
 };
 
 module.exports = SecurityMiddleware;

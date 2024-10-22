@@ -12,7 +12,10 @@ describe('OrdersController', () => {
       authenticateJWT: jest.fn((req, res, next) => {
       req.user = { id: 1, role: "customer" }; // Create a user object in req.user
       next();
-      })
+      }),
+
+      isCustomer: jest.fn((req, res, next) => { next(); }),
+      isDriver: jest.fn((req, res, next) => { next(); }),
     };
 
     orderService = {
