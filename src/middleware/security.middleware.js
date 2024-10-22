@@ -38,7 +38,7 @@ const SecurityMiddleware = (tokenService) => {
     };
 
     // Returns an object with the middleware functions
-    return { authenticateJWT, isCustomer, isDriver, isAdmin };
+    return { authenticateJWT, isCustomer, isDriver };
 };
 
 module.exports = SecurityMiddleware;
