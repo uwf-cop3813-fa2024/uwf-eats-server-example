@@ -42,7 +42,7 @@ Describe the purpose of the SDD and its intended audience.
 <!-- TODO -->
 
 ## 2. Design
-> This section is the body of the SDD and should detail the nature and approach of the design.
+> This section is the body of the SDD and should detail the nature and approach of the design.muyjhjhumcchjmchcghgfmmhghcghmn
 
 ### 2.1 Selected Viewpoints
 > A viewpoint defines the perspective from which a design view is taken. Each selected viewpoint should state what concerns it addresses and identify the visualization language(s) it uses to do so.
