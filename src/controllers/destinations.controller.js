@@ -7,6 +7,16 @@ const DestinationsController = (sec, destinationService) => {
         res.json({ status: "success", data: { destinations } });
     });
 
+    router.post("/destinations", sec.authenticateJWT, sec.isAdmin, async (req, res) => {
+
+        if(!req.body.name || !req.body.address || !req.body.phone || !req.body.notes) {
+            return res.status(400).json({ status: "fail", message: "Missing required fields" });
+        }
+
+        const newDestination = await destinationService.createDestination(req.body);
+        res.json({ status: "success", data: newDestination });
+    });
+
     router.get("/destinations/:id", sec.authenticateJWT, async (req, res) => {
         const destination = await destinationService.getDestinationById(parseInt(req.params.id));
         if (destination) {

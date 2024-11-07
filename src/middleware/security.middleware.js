@@ -37,8 +37,17 @@ const SecurityMiddleware = (tokenService) => {
         }
     };
 
+    const isAdmin = (req, res, next) => {
+        if (req.user.role === 'admin') {
+            next();
+        } else {
+            res.status(403)
+            .json({ status: "fail", message: "You are not authorized to perform this action" });
+        }
+    };
+
     // Returns an object with the middleware functions
-    return { authenticateJWT, isCustomer, isDriver };
+    return { authenticateJWT, isCustomer, isDriver, isAdmin };
 };
 
 module.exports = SecurityMiddleware;

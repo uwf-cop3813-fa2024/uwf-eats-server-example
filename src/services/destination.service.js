@@ -12,6 +12,12 @@ class DestinationService {
             where: { id: parseInt(id) }
         });
     }
+
+    async createDestination(newDestination) {
+        return this.prisma.destination.create({
+            data: newDestination
+        });
+    }
 }
 
 module.exports = DestinationService;
