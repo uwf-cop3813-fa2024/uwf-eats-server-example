@@ -11,25 +11,32 @@ describe('DestinationsController', () => {
 
     beforeEach(() => {
         securityMock = {
-            authenticateJWT: jest.fn((req, res, next) => next())
+            authenticateJWT: jest.fn((req, res, next) => next()),
+            isAdmin: jest.fn((req, res, next) => next()),
         };
 
         destinationServiceMock = {
             getDestinations: jest.fn(),
-            getDestinationById: jest.fn()
+            getDestinationById: jest.fn(),
+            createDestination: jest.fn()
         };
 
         app = express();
+        app.use(express.json()); // Ensure we can parse JSON sent to us
         const controller = DestinationsController(securityMock, destinationServiceMock);
         app.use(controller.router);
     });
 
     it('should return a list of destinations', async () => {
+        
+        //Arrange
         const mockDestinations = [{ id: 1, name: 'Destination 1' }, { id: 2, name: 'Destination 2' }];
         destinationServiceMock.getDestinations.mockResolvedValue(mockDestinations);
 
+        // Act
         const response = await request(app).get('/destinations');
 
+        // Assert
         expect(response.status).toBe(200);
         expect(response.body).toEqual({
             status: 'success',
@@ -69,4 +76,36 @@ describe('DestinationsController', () => {
         await request(app).get('/destinations');
         expect(securityMock.authenticateJWT).toHaveBeenCalled();
     });
+
+    it('should create a new destination', async () => {
+        // Arrange
+        // Set up the mock for the createDestination() call
+        const mockDestination = { id: 1, name: 'Destination 1' };
+        destinationServiceMock.createDestination.mockResolvedValue(mockDestination);
+
+        // Create a fake body to post to the controller
+        const newDest = {
+            name: "test destination",
+            address: "test",
+            phone: "test",
+            notes: "test",
+        };
+
+
+        // Act - simulate a call to POST /destinations
+        const response = await request(app)
+            .post('/destinations')
+            .send(newDest);
+
+        // Assert
+
+        // Make sure we get back a 200, the payload returned is ok,
+        // and that we called the service with the right info
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual({
+            status: 'success',
+            data: mockDestination
+        });
+    });
+
 });
