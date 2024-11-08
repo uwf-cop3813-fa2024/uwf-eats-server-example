@@ -12,7 +12,7 @@ const SecurityMiddleware = (tokenService) => {
                 req.user = verifiedToken.user;
                 next();
             } else {
-                res.sendStatus(403);
+                res.sendStatus(401);
             }
         } else {
             res.sendStatus(401);
